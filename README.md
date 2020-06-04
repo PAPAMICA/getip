@@ -6,7 +6,7 @@ Simples scripts to improve the recovery of network informations.
 ### Getip and sping :
 Use the script "install-all.sh" to install getip and sping.
 
-This script copy getip.sh, getip-plugin and sping.sh to user directory and he add alias to bash and zsh.
+This script install *speedtest-cli*, copy getip.sh, getip-plugin and sping.sh to user directory and add alias to bash and zsh.
 
 
 ```bash
