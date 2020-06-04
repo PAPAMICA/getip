@@ -38,7 +38,7 @@ chmod +x ~/.getip.sh
 cp sping.sh ~/.getip-plugin.sh
 chmod +x ~/.getip-plugin.sh
 
-cp -r img/ ~/.getip-img/
+cp -r getip-img/ ~/.getip-img/
 
 cp sping.sh ~/.sping.sh
 chmod +x ~/.sping.sh

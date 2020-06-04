@@ -5,7 +5,7 @@
 
 network=$(nmcli con show --active)
 if [ "$network" = "" ]; then
-  echo "<img>/home/papamica/.img/ping-error.png</img>"
+  echo "<img>/home/papamica/.getip-img/ping-error.png</img>"
   tf="CHECK NETWORK"
   color="Red"
   echo "<tool><span weight='Bold' fgcolor='$color'>"$tf"</span></tool>"
@@ -57,7 +57,7 @@ if [ $interface != "unreachable" ]; then
   t="0"  
   t="$(timeout 0.8s ping -c 1 -W 1 8.8.8.8 | tail -1| awk -F '/' '{print $5}')"
   if [ -z "$t" ]; then
-  echo "<img>/home/papamica/.img/ping-error.png</img>"
+  echo "<img>/home/papamica/.getip-img/ping-error.png</img>"
   #echo "<txt>  ERROR</txt>"
   color="Red"
   tf="ERROR"
@@ -67,29 +67,29 @@ if [ $interface != "unreachable" ]; then
   t=${t%.*}
   ((t++))
     if [ "$t" -eq 1 ]; then
-    echo "<img>/home/papamica/.img/ping-ok.png</img>"
+    echo "<img>/home/papamica/.getip-img/ping-ok.png</img>"
     #echo "<txt>  <"$t" ms</txt>"
     tf="<$t ms"
     color="Green"
     elif [ "$t" -gt 1 ] && [ "$t" -le 100 ]; then
-    echo "<img>/home/papamica/.img/ping-ok.png</img>"
+    echo "<img>/home/papamica/.getip-img/ping-ok.png</img>"
     #echo "<txt>  "$t" ms</txt>"
     color="Green"
     tf="$t ms"
     elif [ "$t" -gt 100 ] && [ "$t" -le 500 ]; then
-    echo "<img>/home/papamica/.img/ping-bad.png</img>"
+    echo "<img>/home/papamica/.getip-img/ping-bad.png</img>"
     #echo "<txt>  "$t" ms</txt>"
     color="Yellow"
     tf="$t ms"
     else
-    echo "<img>/home/papamica/.img/ping-error.png</img>"
+    echo "<img>/home/papamica/.getip-img/ping-error.png</img>"
     #echo "<txt>  "$t" ms</txt>"
     color="Red"
     tf="$t ms"
     fi
   fi
 else
-  echo "<img>/home/papamica/.img/ping-error.png</img>"
+  echo "<img>/home/papamica/.getip-img/ping-error.png</img>"
   tf="CHECK IP"
   color="Red"
   echo "<tool><span weight='Bold' fgcolor='$color'>"$tf"</span></tool>"

@@ -22,6 +22,8 @@ Set "*Periode*" to "*1.00*".
 ## Usage
 
 ### Getip
+![](reademe-img/getip-capture.png)
+
 Options availables :
 Option | Description
 ------------ | -------------
@@ -41,6 +43,8 @@ getip -sir  |IP informations + Choice interface + Change route + Speedtest
 
 
 ### sping
+![](reademe-img/sping-capture.png)
+
 Use "*sping*" with IP and delay between two ping.
 
 Exemples :
@@ -51,7 +55,7 @@ sping 10.10.0.1    |Ping 10.10.0.1 every 1 second
 sping 10.10.0.1 8    |Ping 10.10.0.1 every 8 seconds
 
 ### Getip Plugin
-![](getip-demo.gif)
+![](reademe-img/getip-demo.gif)
 
 
 ## Contributing
