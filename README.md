@@ -1,5 +1,5 @@
 # Getip
-A simple script to improve the recovery of network information
+Simples scripts to improve the recovery of network informations.
 
 ## Installation
 
