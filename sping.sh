@@ -2,7 +2,13 @@
 ip=8.8.8.8
 temps=1
 
-if [ "$1" != "" ]; then
+if [ "$1" = "-g" ]; then
+    interface=$(ip route get 8.8.8.8 | awk -F"dev " 'NR==1{split($2,a," ");print a[1]}')
+    ip=$(nmcli dev show $interface |grep IP4.GATEWAY | awk '{print $2 }')
+    echo "Your gateway is : $ip"
+fi
+
+if [ "$1" != "-g" ] && [ "$1" != "" ]; then
     ip=$1
 fi
 
