@@ -51,6 +51,8 @@ Exemples :
 Command | Expected result
 ------------ | -------------
 sping       |Ping to 8.8.8.8 every 1 second
+sping -g      |Ping your gateway every 1 second
+sping papamica.fr      |Ping to papamica.fr every 1 second
 sping 10.10.0.1    |Ping 10.10.0.1 every 1 second
 sping 10.10.0.1 8    |Ping 10.10.0.1 every 8 seconds
 
