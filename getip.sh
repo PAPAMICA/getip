@@ -291,7 +291,7 @@ fi
 
 if [[ $1 =~ "s" ]]; then
     echo ""
-    speedtest > temp.txt
+    speedtest --accept-license > temp.txt
     ping=$(grep "Latency" "temp.txt" | awk '{print $2}')
     pingfull=$(grep "Latency" "temp.txt" | awk '{print $2, $3, $4, $5, $6}')
     upload=$(grep "Upload" "temp.txt" | awk '{print $3}')
