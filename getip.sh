@@ -260,21 +260,25 @@ echo ""
   fi
 
 # Vérification de la connexion au serveur DNS
-  t="0"  
-  t="$(ping -c 1 -W 1 $dns | tail -1| awk -F '/' '{print $5}')"
-  if [ -z "$t" ]; then
+  if [ "$dns" = "" ]; then
     tput setaf 1; echo "  DNS SERVER :           ERROR"
-  fi
+  else
+    t="0"
+    t="$(ping -c 1 -W 1 $dns | tail -1| awk -F '/' '{print $5}')"
+    if [ -z "$t" ]; then
+      tput setaf 1; echo "  DNS SERVER :           ERROR"
+    fi
 
-  if [ -n "$t" ]; then
-  t=${t%.*}
-  ((t++))
-    if [ "$t" -eq 1 ]; then
-    tput setaf 2; echo "  DNS SERVER :           OK => <$t ms"
-    elif [ "$t" -gt 1 ] && [ "$t" -le 100 ]; then
-    tput setaf 2; echo "  DNS SERVER :           OK => $t ms"
-    else
-    tput setaf 3; echo "  DNS SERVER :           BAD => $t ms"
+    if [ -n "$t" ]; then
+    t=${t%.*}
+    ((t++))
+      if [ "$t" -eq 1 ]; then
+      tput setaf 2; echo "  DNS SERVER :           OK => <$t ms"
+      elif [ "$t" -gt 1 ] && [ "$t" -le 100 ]; then
+      tput setaf 2; echo "  DNS SERVER :           OK => $t ms"
+      else
+      tput setaf 3; echo "  DNS SERVER :           BAD => $t ms"
+      fi
     fi
   fi
 
@@ -288,43 +292,44 @@ fi
 if [[ $1 =~ "s" ]]; then
     echo ""
     speedtest > temp.txt
-    ping=$(grep "Hosted" "temp.txt" | awk '{print $(NF-1)}')
-    upload=$(grep "Upload" "temp.txt" | awk '{print $2}')
-    download=$(grep "Download" "temp.txt" | awk '{print $2}')
-    fai=$(grep "Testing from" "temp.txt" | awk '{print $3}')
+    ping=$(grep "Latency" "temp.txt" | awk '{print $2}')
+    pingfull=$(grep "Latency" "temp.txt" | awk '{print $2, $3, $4, $5, $6}')
+    upload=$(grep "Upload" "temp.txt" | awk '{print $3}')
+    download=$(grep "Download" "temp.txt" | awk '{print $3}')
+    fai=$(grep "ISP" "temp.txt" | awk '{print $2, $3, $4, $5}')
     rm temp.txt
 
     echo "  FAI :                  $fai"
 
     ping=${ping%.*}
-    if [ "$ping" -eq 0 ]; then
-      tput setaf 1; echo "  PING :                 ERROR"
+    if [ "$ping" -eq 0 ];then
+      tput setaf 2; echo "  PING :                 OK => $pingfull"
     elif [ "$ping" -gt 0 ] && [ "$ping" -le 100 ]; then
-      tput setaf 2; echo "  PING :                 OK => $ping ms"
+      tput setaf 2; echo "  PING :                 OK => $pingfull"
     else
-      tput setaf 3; echo "  PING :                 BAD => $ping ms"
+      tput setaf 3; echo "  PING :                 BAD => $pingfull"
     fi
 
     download=${download%.*}
     if [ "$download" -eq 0 ];then
       tput setaf 1; echo "  DOWNLOAD :             ERROR"
     elif [ "$download" -gt 0 ] && [ "$download" -le 2 ]; then 
-      tput setaf 1; echo "  DOWNLOAD :             BAD => $download Mbit/s"
+      tput setaf 1; echo "  DOWNLOAD :             BAD => $download Mbps"
     elif [ "$download" -gt 2 ] && [ "$download" -le 20 ]; then 
-      tput setaf 3; echo "  DOWNLOAD :             OK => $download Mbit/s"
+      tput setaf 3; echo "  DOWNLOAD :             OK => $download Mbps"
     else
-      tput setaf 2; echo "  DOWNLOAD :             GOOD => $download Mbit/s"
+      tput setaf 2; echo "  DOWNLOAD :             GOOD => $download Mbps"
     fi
 
     upload=${upload%.*}
     if [ "$upload" -eq 0 ];then
       tput setaf 1; echo "  UPLOAD :               ERROR"
     elif [ "$upload" -gt 0 ] && [ "$upload" -le 2 ]; then 
-      tput setaf 1; echo "  UPLOAD :               BAD => $upload Mbit/s"
+      tput setaf 1; echo "  UPLOAD :               BAD => $upload Mbps"
     elif [ "$upload" -gt 2 ] && [ "$upload" -le 20 ]; then 
-      tput setaf 3; echo "  UPLOAD :               OK => $upload Mbit/s"
+      tput setaf 3; echo "  UPLOAD :               OK => $upload Mbps"
     else
-      tput setaf 2; echo "  UPLOAD :               GOOD => $upload Mbit/s"
+      tput setaf 2; echo "  UPLOAD :               GOOD => $upload Mbps"
     fi
     tput setaf 7; echo "________________________________________________"
 fi

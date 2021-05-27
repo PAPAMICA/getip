@@ -9,22 +9,25 @@ echo ""
 tput setaf 2; echo "Installation of dependencies"
 tput setaf 7; echo ""
 
-packagesNeeded='speedtest-cli network-manager net-tools'
+packagesNeeded='speedtest network-manager net-tools'
 if [ -x "$(command -v apk)" ]; then 
         sudo apk add -y --no-cache $packagesNeeded
         tput setaf 2; echo "$packagesNeeded installed."
     elif [ -x "$(command -v apt-get)" ]; then 
+        sudo apt-get remove speedtest-cli
+        curl -s https://install.speedtest.net/app/cli/install.deb.sh | sudo bash
         sudo apt-get install -y $packagesNeeded
         tput setaf 2; echo "$packagesNeeded installed."
     elif [ -x "$(command -v dnf)" ];     then 
+        sudo dnf remove speedtest-cli
+        curl -s https://install.speedtest.net/app/cli/install.rpm.sh | sudo bash
         sudo dnf install -y $packagesNeeded
         tput setaf 2; echo "$packagesNeeded installed."
     elif [ -x "$(command -v zypper)" ];  then 
         sudo zypper install -y $packagesNeeded
         tput setaf 2; echo "$packagesNeeded installed."
     elif [ -x "$(command -v pacman)" ];  then 
-        sudo pacman -S --noconfirm $packagesNeeded
-        tput setaf 2; echo "$packagesNeeded installed."
+        tput setaf 1; echo "FAILED TO INSTALL PACKAGE: Package manager not found. You must manually install: $packagesNeeded">&2; 
     else 
         tput setaf 1; echo "FAILED TO INSTALL PACKAGE: Package manager not found. You must manually install: $packagesNeeded">&2; 
 fi
